@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-family: 'Inter';
+}
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+    background:-webkit-linear-gradient(left, #06ffda, #9debdf);
+}
+#main{
+    width: 571px;
+    height: 750px;
+    left: 30%;
+    top: 40px;
+    background: #FFFFFF;
+    
+}
+#content{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    
+}
+#content .head{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+/* le titre Java scipt Quiz */
+#content h1{
+    margin: 70px 0 0 30px;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+    color: #555555;
+}
+
+#content p{
+    margin: 20px 40px 40px 20px;
+    padding: 0 25px 0 25px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+    text-align: center;
+    color: #555555;
+}
+.columns{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+.columns>.column{
+    padding: 0;
+    margin: 0 25px 0 25px;
+}
+
+.column>label{
+    display: block;
+    margin-bottom: 10px;
+}
+.columns>.column>.input{
+    height: 40px;width: 100%;
+    border: 1px solid #FF3838;
+}
+.columns>.column>button{
+    height: 40px;width: 240px;
+    margin: 40px 140px 0 130px;
+    background-color: #028A3D;
+    color:#FFFFFF;
+    font-size: 20px; font-weight: bold;
+}
+
+.info{
+    display: block;
+    margin-top: 5px;
+    color: #FF3838;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+}
+
+/* deuxieme page */
+
+.columns>.column-radio{
+    padding: 0;
+    margin: 0 25px 10px 25px;
+    height: 50px;
+    border: solid 1px #DDDDDD;
+ 
+}
+
+.columns>.column-radio>.input{
+    font-size: 50px;
+    height: 40px;
+    padding: 20px;
+
+}
+.columns>.column-radio>label{
+    font-size: 20px;
+    padding: 20px;
+
+}
+.columns>.column>div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.columns>.column>div>button{
+    color: #FFFFFF;
+    margin: 0 40px 0 0;
+    height: 40px; 
+    border: solid 1px;
+}
+
+.next{
+    color: #FFFFFF;
+    border: solid 1px;
+    background: #028A3D;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.quit{
+    color: #FFFFFF;
+    border: solid 1px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    background: #EC880C;
+    color: #2d2626;
+}
