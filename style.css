@@ -117,18 +117,17 @@ body{
     font-size: 25px;
     padding: 20px;
 }
-.columns>.column>div{
+.columns>.column-btn{
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
 
-.columns>.column>div>button{
+.columns>.column-btn>button{
     color: #FFFFFF;
     margin: 0 40px 0 0;
     height: 40px; 
     border: solid 1px;
 }
-
 .next{
     color: #FFFFFF;
     border: solid 1px;
