@@ -33,25 +33,26 @@ const form = document.querySelector("#form");
 const start = document.querySelector(".start");
 btns.append(quit, next);
 let j = 0 //slide number;
-
-next.addEventListener("click", (e)=>{
-  if(j < Base.length){
-    question.append((Object.assign(head.appendChild(Object.assign(document.createElement("h1"), {textContent: Base[j].titre})))),columns);
+function affichePage(){
+  question.append((Object.assign(head.appendChild(Object.assign(document.createElement("h1"), {textContent: Base[j].titre})))),columns);
     for(let i=0; i<column.length; i++){
       Object.assign(columns.appendChild(column[i]), {classList:"column-radio"}).append(Object.assign(column[i].appendChild(input[i]), {type: "radio", id:""+i+"", value: Base[j].reponses[i]}),Object.assign(column[i].appendChild(label[i]), {for:""+i+"", textContent: Base[j].reponses[i]}));
     }
-    j++;
     columns.appendChild(btns);
+}
+next.addEventListener("click", (e)=>{
+  if(j < Base.length){
+    j++;
+    
   }
+  form.appendChild(question);
 })
-
-
 
 start.addEventListener("click",(e)=>{ //start button event 
   e.preventDefault();
   
-    // document.querySelector(".accueil").style.display = "none";
-    // form.appendChild(question);
+    document.querySelector(".accueil").style.display = "none";
+    form.appendChild(question);
 })
 
 
