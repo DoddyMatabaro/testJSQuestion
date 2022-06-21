@@ -23,23 +23,21 @@ let Base = [
     new Libelle("Le nom correct d'une variable est :","B", ["ma_variable", "ma variable", "ma-variable", "mavariable()"], 1),
     new Libelle("L'object JavaScript qui gére le DOM est  :","D", ["HTMLElement", "DOM", "Node", "document"], 3)
   ];
-let question = document.createElement('div');
-let head = document.createElement('div');
-let intitule = document.createElement('h1');
-let columns = document.createElement('div');
+let question =Object.assign(document.createElement("div"), {className: "question"});;
+let head = Object.assign(document.createElement("div"), {className: "head"});;
+let columns = Object.assign(document.createElement("div"), {className: "columns"});
 let column = [document.createElement('div'),document.createElement('div'), document.createElement('div'),document.createElement('div')];
 let input = [document.createElement('input'),document.createElement('input'), document.createElement('input'),document.createElement('input')];
 let label = [document.createElement('label'),document.createElement('label'), document.createElement('label'),document.createElement('label')];
-let contButt = document.createElement('div');
-question.appendChild(Object.assign(head.appendChild(Object.assign(document.createElement("h1"), {textContent:"Doddy", classList:"ok"}))))
-
+const quit = Object.assign(document.createElement("button"), {className: "quit", textContent: "Quitter"});
+const next = Object.assign(document.createElement("button"), {className: "next", textContent: "Suivant"});
+const btns = Object.assign(document.createElement("div"), {className: "column-btn"});
+const form = document.querySelector("#form");
+btns.append(quit, next);
+question.append((Object.assign(head.appendChild(Object.assign(document.createElement("h1"), {textContent: Base[0].titre, classList:"ok"})))),columns);
 for(let i=0; i<column.length; i++){
-  Object.assign(column[i].appendChild(input[i]), {type: "radio", id:""+i+""});
-  column[i].appendChild(label[i]).setAttribute("for", ""+i+"");
-  Object.assign(columns.appendChild(column[i]), {classList:"column-radio"});
+  Object.assign(columns.appendChild(column[i]), {classList:"column-radio"}).append(Object.assign(column[i].appendChild(input[i]), {type: "radio", id:""+i+""}),Object.assign(column[i].appendChild(label[i]), {for:""+i+"", textContent: Base[0].reponses[i]}));
 }
-question.appendChild(columns);
-
-// .appendChild(column).appendChild(input);
-
-console.log(question);
+columns.appendChild(btns)
+form.appendChild(question);
+console.log(Base);
