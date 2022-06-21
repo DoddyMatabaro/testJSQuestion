@@ -1,11 +1,8 @@
-const pageParent = document.querySelector('.question');
-
 function Libelle(titre, reponse, reponses){
   this.titre = titre;
   this.reponse = reponse;
   this.reponses= reponses;
 }
-
 let Base = [
     new Libelle("Quel est le type d'un fichier javascript ?","C",[".j",".jsx", ".js",".ts"]),
     new Libelle("La syntaxe correcte pour créer un objet vide en Js est :","A", ["let monObjet = {}", "let monObjet = []", "let monObjet = ()", "let monObjet = null"]),
@@ -33,11 +30,20 @@ const quit = Object.assign(document.createElement("button"), {className: "quit",
 const next = Object.assign(document.createElement("button"), {className: "next", textContent: "Suivant"});
 const btns = Object.assign(document.createElement("div"), {className: "column-btn"});
 const form = document.querySelector("#form");
+const start = document.querySelector(".start");
+
 btns.append(quit, next);
+
 question.append((Object.assign(head.appendChild(Object.assign(document.createElement("h1"), {textContent: Base[0].titre, classList:"ok"})))),columns);
 for(let i=0; i<column.length; i++){
-  Object.assign(columns.appendChild(column[i]), {classList:"column-radio"}).append(Object.assign(column[i].appendChild(input[i]), {type: "radio", id:""+i+""}),Object.assign(column[i].appendChild(label[i]), {for:""+i+"", textContent: Base[0].reponses[i]}));
+  Object.assign(columns.appendChild(column[i]), {classList:"column-radio"}).append(Object.assign(column[i].appendChild(input[i]), {type: "radio", id:""+i+"", value: Base[0].reponses[i]}),Object.assign(column[i].appendChild(label[i]), {for:""+i+"", textContent: Base[0].reponses[i]}));
 }
 columns.appendChild(btns)
-form.appendChild(question);
-console.log(Base);
+start.addEventListener("click",(e)=>{
+  e.preventDefault();
+  document.querySelector(".accueil").style.display = none;
+    form.appendChild(question);
+})
+// form.appendChild(question);
+// console.log(Base);
+

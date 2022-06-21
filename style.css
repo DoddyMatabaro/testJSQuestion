@@ -21,20 +21,15 @@ body{
     background: #FFFFFF;
     
 }
-#content{
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
-    
-}
-#content>.head{
+
+.accueil>.head{
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
     margin-bottom: 40px;
 }
 /* le titre Java scipt Quiz */
-#content h1{
+#main h1{
     margin: 70px 0 0 30px;
     font-weight: 500;
     font-size: 32px;
@@ -43,8 +38,7 @@ body{
     color: #555555;
 }
 
-
-#content p{
+.accueil p{
     margin: 20px 40px 40px 20px;
     padding: 0 25px 0 25px;
     font-family: 'Inter';
