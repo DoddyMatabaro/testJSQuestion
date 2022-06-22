@@ -20,8 +20,8 @@ let Base = [
     new Libelle("Le nom correct d'une variable est :","B", ["ma_variable", "ma variable", "ma-variable", "mavariable()"], 1),
     new Libelle("L'object JavaScript qui gére le DOM est  :","D", ["HTMLElement", "DOM", "Node", "document"], 3)
   ];
-let question =Object.assign(document.createElement("div"), {className: "question"});
-let head = Object.assign(document.createElement("div"), {className: "head"});
+const question =Object.assign(document.createElement("div"), {className: "question"});
+
 let columns = Object.assign(document.createElement("div"), {className: "columns"});
 let column = [document.createElement('div'),document.createElement('div'), document.createElement('div'),document.createElement('div')];
 let input = [document.createElement('input'),document.createElement('input'), document.createElement('input'),document.createElement('input')];
@@ -29,34 +29,51 @@ let label = [document.createElement('label'),document.createElement('label'), do
 const quit = Object.assign(document.createElement("button"), {className: "quit", textContent: "Quitter"});
 const next = Object.assign(document.createElement("button"), {className: "next", textContent: "Suivant"});
 const btns = Object.assign(document.createElement("div"), {className: "column-btn"});
+const head = Object.assign(document.createElement("div"), {className: "head2"});
 const form = document.querySelector("#form");
 const start = document.querySelector(".start");
-const progressCont = Object.assign(document.createElement("div"), {className: "progressCont", textContent: "Contenair progress"});
+const progressCont = Object.assign(document.createElement("div"), {className: "progressCont"});
 const progress = Object.assign(document.createElement("div"), {className: "progress", textContent: "Progress"});
 const progressText = Object.assign(document.createElement("div"), {className: "progressText", textContent: "n question"});
 const progressTimer = Object.assign(document.createElement("div"), {className: "progressTimer", textContent: "30"});
-progressCont.append(progressText, progressTimer, progress)
+progressCont.append(progressText, progressTimer, progress);
 btns.append(quit, next);
-let j = 0 //slide number;
-function affichePage(Base, question, j, column, columns, input,label,head){
-    question.append((Object.assign(head.appendChild(Object.assign(document.createElement("h1"), {className: "test", textContent: Base[j].titre})))),columns);
-     question.appendChild(progressCont);  
+let j = 0; //slide number;
+function affichePage(Base, question, j, column, columns, input,label,progressCont){
+    head.appendChild(Object.assign(document.createElement("h1"), { textContent: "Dddy"}));
+    head.appendChild(progressCont);
+   
     for(let i=0; i<column.length; i++){
         Object.assign(columns.appendChild(column[i]), {classList:"column-radio"}).append(Object.assign(column[i].appendChild(input[i]), {name: "reponse", type: "radio", id:""+i+"", value: Base[j].reponses[i]}),Object.assign(column[i].appendChild(label[i]), {for:""+i+"", textContent: Base[j].reponses[i]}));
       }
     columns.appendChild(btns);
+    question.append(head, columns);
     return question;
 }
+console.log(head);
 next.addEventListener("click", (e)=>{
   if(j < Base.length){
     j++;
     e.preventDefault();
-    form.appendChild(affichePage(Base,question,j,column,columns,input,label,head));
+    form.appendChild(affichePage(Base,question,j,column,columns,input,label,  progressCont));
   }
 })
 start.addEventListener("click",(e)=>{ //start button event 
   e.preventDefault();
     document.querySelector(".accueil").style.display = "none";
-    form.appendChild(affichePage(Base,question,0,column,columns,input,label,head));
+    form.appendChild(affichePage(Base,question,0,column,columns,input,label, progressCont));
 })
 
+function move() {
+  var elem = document.querySelector("progre");   
+  var width = 1;
+  var id = setInterval(frame, 10);
+  function frame() {
+    if (width >= 100) {
+      clearInterval(id);
+    } else {
+      width++; 
+      elem.style.width = width + '%'; 
+    }
+  }
+}

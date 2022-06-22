@@ -148,3 +148,18 @@ body{
     background: #EC880C;
     color: #2d2626;
 }
+
+.head2{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 0.5fr 0.5fr;
+    border: #028A3D 1px solid;
+    margin-bottom: 40px;
+}
+.progressCont{
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr;
+}
+.progress{
+    
+}
