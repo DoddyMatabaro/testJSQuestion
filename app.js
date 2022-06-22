@@ -33,24 +33,26 @@ const head = Object.assign(document.createElement("div"), {className: "head2"});
 const form = document.querySelector("#form");
 const start = document.querySelector(".start");
 const progressCont = Object.assign(document.createElement("div"), {className: "progressCont"});
-const progress = Object.assign(document.createElement("div"), {className: "progress", textContent: "Progress"});
-const progressText = Object.assign(document.createElement("div"), {className: "progressText", textContent: "n question"});
+const progress = Object.assign(document.createElement("div"), {className: "progress"});
+
 const progressTimer = Object.assign(document.createElement("div"), {className: "progressTimer", textContent: "30"});
-progressCont.append(progressText, progressTimer, progress);
+progress.append(Object.assign(document.createElement("div"), {className: "barre"}));
 btns.append(quit, next);
 let j = 0; //slide number;
+
 function affichePage(Base, question, j, column, columns, input,label,progressCont){
-    head.appendChild(Object.assign(document.createElement("h1"), { textContent: "Dddy"}));
-    head.appendChild(progressCont);
-   
-    for(let i=0; i<column.length; i++){
+      for(let i=0; i<column.length; i++){
         Object.assign(columns.appendChild(column[i]), {classList:"column-radio"}).append(Object.assign(column[i].appendChild(input[i]), {name: "reponse", type: "radio", id:""+i+"", value: Base[j].reponses[i]}),Object.assign(column[i].appendChild(label[i]), {for:""+i+"", textContent: Base[j].reponses[i]}));
       }
+      const progressText = Object.assign(document.createElement("div"), {className: "progressText", textContent: j+1+"/"+Base.length});
+      progressCont.append(progressText, progressTimer, progress);
+      head.appendChild(Object.assign(document.createElement("h1"), { textContent: Base[j].titre}));
+      head.appendChild(progressCont);
     columns.appendChild(btns);
     question.append(head, columns);
     return question;
 }
-console.log(head);
+console.log(question);
 next.addEventListener("click", (e)=>{
   if(j < Base.length){
     j++;
@@ -61,19 +63,25 @@ next.addEventListener("click", (e)=>{
 start.addEventListener("click",(e)=>{ //start button event 
   e.preventDefault();
     document.querySelector(".accueil").style.display = "none";
+    
     form.appendChild(affichePage(Base,question,0,column,columns,input,label, progressCont));
+    move(100);
 })
-
-function move() {
-  var elem = document.querySelector("progre");   
-  var width = 1;
-  var id = setInterval(frame, 10);
-  function frame() {
-    if (width >= 100) {
-      clearInterval(id);
-    } else {
-      width++; 
-      elem.style.width = width + '%'; 
+    function move(i) {
+      if (i == 100) {
+        i = 99;
+        let elem = document.querySelector(".barre");
+        let width = 99;
+        let id = setInterval(frame, 1200);
+        function frame() {
+          if (width <= 0 ) {
+            clearInterval(id);
+            i = 100;
+          } else {
+            width--;
+            elem.style.width = width + "%";
+          }
+        }
+      }
     }
-  }
-}
+
