@@ -21,7 +21,6 @@ let Base = [
     new Libelle("L'object JavaScript qui gére le DOM est  :","D", ["HTMLElement", "DOM", "Node", "document"], 3)
   ];
 const question =Object.assign(document.createElement("div"), {className: "question"});
-
 let columns = Object.assign(document.createElement("div"), {className: "columns"});
 let column = [document.createElement('div'),document.createElement('div'), document.createElement('div'),document.createElement('div')];
 let input = [document.createElement('input'),document.createElement('input'), document.createElement('input'),document.createElement('input')];

@@ -109,6 +109,11 @@ body{
     padding: 20px;
 
 }
+
+.columns>.column-radio:hover {
+    border: solid 1px #05e76b;
+}
+
 .columns>.column-radio>label{
     font-size: 25px;
     padding: 20px;
@@ -116,12 +121,13 @@ body{
 .columns>.column-btn{
     display: grid;
     grid-template-columns: 1fr 1fr;
+    padding-top: 10px;
 }
 
 .columns>.column-btn>button{
     color: #FFFFFF;
-    margin: 0 40px 0 0;
-    height: 40px; 
+    margin: 0 40px 0 40px;
+    height: 70px; 
     border: solid 1px;
 }
 .next{
@@ -152,22 +158,34 @@ body{
 .head2{
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 0.5fr 0.5fr;
-    border: #028A3D 1px solid;
+    grid-template-rows: 1fr 0.5fr;
     margin-bottom: 40px;
 }
 .progressCont{
     display: grid;
-    grid-template-columns: 0.5fr 0.5fr;
+    grid-template-areas: 'txt timer' 'progress progress'  ;
+    margin-top: 30px;
+}
+.progressTimer{
+    grid-area: timer;
+    font-size: 20px;
+    text-align: end;
+    padding-right: 20px;
+}
+.progressText{
+    grid-area: txt;
+   font-size: 20px;
+   padding-left: 20px;
 }
 .progress{
+    margin-top: 5px;
+    padding: 10px;
     width: 100%;
-    background-color: #ddd;
+    grid-area: progress;
 }
-
 .barre {
     width: 1%;
-    height: 20px;
+    height: 10px;
     border-radius: 50px;
-    background-color: #04AA6D;
+    background-color: #17d878;
 }
