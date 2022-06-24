@@ -57,7 +57,7 @@ next.addEventListener("click", (e)=>{
     j++;
     e.preventDefault();
     form.appendChild(affichePage(Base,question,j,column,columns,input,label,  progressCont));
-    move(100);
+    move(100, true);
   }
 })
 start.addEventListener("click",(e)=>{ //start button event 
@@ -65,16 +65,16 @@ start.addEventListener("click",(e)=>{ //start button event
     document.querySelector(".accueil").style.display = "none";
     
     form.appendChild(affichePage(Base,question,0,column,columns,input,label, progressCont));
-    move(100);
+    move(100, true);
 })
-    function move(i) {
+    function move(i, etat) {
       if (i == 100) {
         i = 99;
         let elem = document.querySelector(".barre");
         let width = 99;
         let id = setInterval(frame, 600);
         function frame() {
-          if (width <= 0 ||  ) {
+          if (width <= 0 ||  !etat) {
             clearInterval(id);
             i = 100;
           } else {
