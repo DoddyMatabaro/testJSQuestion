@@ -57,6 +57,7 @@ next.addEventListener("click", (e)=>{
     j++;
     e.preventDefault();
     form.appendChild(affichePage(Base,question,j,column,columns,input,label,  progressCont));
+    move(100);
   }
 })
 start.addEventListener("click",(e)=>{ //start button event 
@@ -71,9 +72,9 @@ start.addEventListener("click",(e)=>{ //start button event
         i = 99;
         let elem = document.querySelector(".barre");
         let width = 99;
-        let id = setInterval(frame, 1200);
+        let id = setInterval(frame, 600);
         function frame() {
-          if (width <= 0 ) {
+          if (width <= 0 ||  ) {
             clearInterval(id);
             i = 100;
           } else {
