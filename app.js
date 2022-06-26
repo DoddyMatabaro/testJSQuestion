@@ -3,7 +3,7 @@ function Libelle(titre, reponse, reponses){
   this.reponse = reponse;
   this.reponses= reponses;
 }
-let Base = [
+const Base = [
     new Libelle("Quel est le type d'un fichier javascript ?","C",[".j",".jsx", ".js",".ts"]),
     new Libelle("La syntaxe correcte pour créer un objet vide en Js est :","A", ["let monObjet = {}", "let monObjet = []", "let monObjet = ()", "let monObjet = null"]),
     new Libelle("Ces mots permettent d'initialiser une variable, sauf :","C", ["var", "const", "function", "let"], 2),
@@ -21,19 +21,21 @@ let Base = [
     new Libelle("L'object JavaScript qui gére le DOM est  :","D", ["HTMLElement", "DOM", "Node", "document"], 3)
   ];
 const question =Object.assign(document.createElement("div"), {className: "question"});
-let columns = Object.assign(document.createElement("div"), {className: "columns"});
-let column = [document.createElement('div'),document.createElement('div'), document.createElement('div'),document.createElement('div')];
-let input = [document.createElement('input'),document.createElement('input'), document.createElement('input'),document.createElement('input')];
-let label = [document.createElement('label'),document.createElement('label'), document.createElement('label'),document.createElement('label')];
+const columns = Object.assign(document.createElement("div"), {className: "columns"});
+const column = [document.createElement('div'),document.createElement('div'), document.createElement('div'),document.createElement('div')];
+const input = [document.createElement('input'),document.createElement('input'), document.createElement('input'),document.createElement('input')];
+const label = [document.createElement('label'),document.createElement('label'), document.createElement('label'),document.createElement('label')];
 const quit = Object.assign(document.createElement("button"), {className: "quit", textContent: "Quitter"});
 const next = Object.assign(document.createElement("button"), {className: "next", textContent: "Suivant"});
 const btns = Object.assign(document.createElement("div"), {className: "column-btn"});
 const head = Object.assign(document.createElement("div"), {className: "head2"});
+const span1 = document.querySelector(".infoName"); const nom = document.querySelector("#nom");
+const span2 = document.querySelector(".infoMail"); const mail = document.querySelector("#mail");
 const form = document.querySelector("#form");
 const start = document.querySelector(".start");
+
 const progressCont = Object.assign(document.createElement("div"), {className: "progressCont"});
 const progress = Object.assign(document.createElement("div"), {className: "progress"});
-
 const progressTimer = Object.assign(document.createElement("div"), {className: "progressTimer", textContent: "30"});
 progress.append(Object.assign(document.createElement("div"), {className: "barre"}));
 btns.append(quit, next);
@@ -57,24 +59,38 @@ next.addEventListener("click", (e)=>{
     j++;
     e.preventDefault();
     form.appendChild(affichePage(Base,question,j,column,columns,input,label,  progressCont));
+    move(0,false)
     move(100, true);
   }
 })
+
+let validateEmail =  (emailAdress)=>{ //email validation
+      let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      return (emailAdress.match(regexEmail) ? true : false);
+ }
+
+let test = (elt, info, text)=>{ // form validation
+  return (text == "nom" ? (elt.value == "" ?  info.textContent = "Veillez renseigner votre nom" : (elt.value.length <= 2 ?  info.textContent = "Entrer un nom valide" : info.textContent = "") ) : (elt.value == "" ?  info.textContent = "Veillez renseigner votre mail" : (validateEmail(elt.value) ?  info.textContent = "Entrer une adresse mail valide" : 
+        document.querySelector(".accueil").style.display = "none"
+          
+   ) ));
+}
 start.addEventListener("click",(e)=>{ //start button event 
-  e.preventDefault();
-    document.querySelector(".accueil").style.display = "none";
-    
-    form.appendChild(affichePage(Base,question,0,column,columns,input,label, progressCont));
-    move(100, true);
+        e.preventDefault();
+        test(nom, span1, "nom");
+        test(mail, span2, "mail");
+        
+        move(100, true);
+
 })
-    function move(i, etat) {
+    function move(i) {
       if (i == 100) {
         i = 99;
         let elem = document.querySelector(".barre");
         let width = 99;
         let id = setInterval(frame, 600);
         function frame() {
-          if (width <= 0 ||  !etat) {
+          if (width <= 0) {
             clearInterval(id);
             i = 100;
           } else {
