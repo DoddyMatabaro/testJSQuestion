@@ -95,7 +95,7 @@ next.addEventListener("click", (e)=>{ // next question event
   
   if(j < Base.length){
     checkSelectedAssertion();
-    console.log();
+    console.log(reponses);
     j++;
     nextQuestion();
     progress.value = 60;
