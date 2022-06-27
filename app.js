@@ -1,9 +1,9 @@
-function Libelle(titre, reponse, reponses){
+function Libelle(titre, reponse, reponses){ //class that structed questions
   this.titre = titre;
   this.reponse = reponse;
   this.reponses= reponses;
 }
-const Base = [
+const Base = [ //questions base
     new Libelle("Quel est le type d'un fichier javascript ?","C",[".j",".jsx", ".js",".ts"]),
     new Libelle("La syntaxe correcte pour créer un objet vide en Js est :","A", ["let monObjet = {}", "let monObjet = []", "let monObjet = ()", "let monObjet = null"]),
     new Libelle("Ces mots permettent d'initialiser une variable, sauf :","C", ["var", "const", "function", "let"], 2),
@@ -20,6 +20,7 @@ const Base = [
     new Libelle("Le nom correct d'une variable est :","B", ["ma_variable", "ma variable", "ma-variable", "mavariable()"], 1),
     new Libelle("L'object JavaScript qui gére le DOM est  :","D", ["HTMLElement", "DOM", "Node", "document"], 3)
   ];
+  console.log(Base[2]);
 const question =Object.assign(document.createElement("div"), {className: "question"});
 const columns = Object.assign(document.createElement("div"), {className: "columns"});
 const column = [document.createElement('div'),document.createElement('div'), document.createElement('div'),document.createElement('div')];
@@ -32,24 +33,31 @@ const head = Object.assign(document.createElement("div"), {className: "head2"});
 const progressCont = Object.assign(document.createElement("div"), {className: "progressCont"});
 const span1 = document.querySelector(".infoName"); const nom = document.querySelector("#nom");
 const span2 = document.querySelector(".infoMail"); const mail = document.querySelector("#mail");
-
 const form = document.querySelector("#form");let j = 0; //slide number;
 const progress = Object.assign(document.createElement("progress"), {value: "60", max: "60"});
 const progressTimer = Object.assign(document.createElement("div"), {className: "progressTimer", textContent: progress.value});
 progress.append(Object.assign(document.createElement("div"), {className: "barre"}));
 btns.append(quit, next);
 const start = document.querySelector(".start");
-function affichePage(Base, question, j, column, columns, input,label,progressCont){
       for(let i=0; i<column.length; i++){
         Object.assign(columns.appendChild(column[i]), {classList:"column-radio"}).append(Object.assign(column[i].appendChild(input[i]), {name: "reponse", type: "radio", id:""+i+"", value: Base[j].reponses[i]}),Object.assign(column[i].appendChild(label[i]), {for:""+i+"", textContent: Base[j].reponses[i]}));
       }
       const progressText = Object.assign(document.createElement("div"), {className: "progressText", textContent: "Question "+ (j+1)+"/"+Base.length});
       progressCont.append(progressText, progressTimer, progress);
-      head.appendChild(Object.assign(document.createElement("h1"), { textContent: Base[j].titre}));
-      head.appendChild(progressCont);
+      const sujet = Object.assign(document.createElement("h1"), { textContent: Base[j].titre});
+      head.append(sujet, progressCont);
     columns.appendChild(btns);
     question.append(head, columns);
-    return question;
+    question.style.display = "none";
+    form.appendChild(question);
+
+let nextQuestion = ()=>{
+  for(let i=0; i<column.length; i++){
+      input[i].value =  Base[j].reponses[i];
+      label[i].textContent =  Base[j].reponses[i];
+      progressText.textContent = "Question "+ (j+1)+"/"+Base.length;
+      sujet.textContent =  Base[j].titre;
+  }
 }
 const move = () => {
 	if (progress.value > 0) {
@@ -59,26 +67,28 @@ const move = () => {
 		setTimeout(move, 1000);
 	} else {
 		// checkResponse()
-		progress.value = 60;
 		j++
+    nextQuestion()
+    progress.value = 60;
+    move()
 	}
 };
-next.addEventListener("click", (e)=>{
+next.addEventListener("click", (e)=>{ // next question event
   e.preventDefault();
+   
   if(j < Base.length){
     j++;
-    form.appendChild(affichePage(Base,question,j,column,columns,input,label, progressCont));
-    // move(100, true);
+    nextQuestion();
+    progress.value = 60;
   }
 })
-
 let validateEmail =  (emailAdress)=>{ //email validation
       let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
       return regexEmail.test(emailAdress) ;
  }
 let test = (elt, info)=>{ // form validation
      return (elt[0].value == "" ? info[0].textContent = "Veillez renseigner votre nom" : elt[0].value.length <= 2 ? info[0].textContent ="Entrer un nom valide": elt[1].value == "" ? info[1].textContent = "Veuillez renseigner votre mail" : !validateEmail(elt[1].value) ? info[1].textContent = "Entrer une adresse mail valide" :
-      (document.querySelector(".accueil").style.display = "none",form.appendChild(affichePage(Base,question,j,column,columns,input,label,progressCont)), move()));
+      (document.querySelector(".accueil").style.display = "none", question.style.display = "block", move(), next.disabled = true));
 }
 start.addEventListener("click",(e)=>{ //start button event 
         e.preventDefault();
