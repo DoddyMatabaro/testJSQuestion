@@ -59,9 +59,9 @@ let nextQuestion = ()=>{
   }
 }
 for(const input of inputs){
-  input.addEventListener('change', disabledNextButton);
+  input.addEventListener('change', enabledNextButton);
 }        
-function disabledNextButton(e) {
+function enabledNextButton(e) {
   if (this.checked) {
     next.disabled = false
   }
