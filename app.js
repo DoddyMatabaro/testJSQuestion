@@ -20,11 +20,10 @@ const Base = [ //questions base
     new Libelle("Le nom correct d'une variable est :","B", ["ma_variable", "ma variable", "ma-variable", "mavariable()"], 1),
     new Libelle("L'object JavaScript qui gére le DOM est  :","D", ["HTMLElement", "DOM", "Node", "document"], 3)
   ];
-  console.log(Base[2]);
 const question =Object.assign(document.createElement("div"), {className: "question"});
 const columns = Object.assign(document.createElement("div"), {className: "columns"});
 const column = [document.createElement('div'),document.createElement('div'), document.createElement('div'),document.createElement('div')];
-const input = [document.createElement('input'),document.createElement('input'), document.createElement('input'),document.createElement('input')];
+const inputs = [document.createElement('input'),document.createElement('input'), document.createElement('input'),document.createElement('input')];
 const label = [document.createElement('label'),document.createElement('label'), document.createElement('label'),document.createElement('label')];
 const quit = Object.assign(document.createElement("button"), {className: "quit", textContent: "Quitter"});
 const next = Object.assign(document.createElement("button"), {className: "next", textContent: "Suivant"});
@@ -40,7 +39,7 @@ progress.append(Object.assign(document.createElement("div"), {className: "barre"
 btns.append(quit, next);
 const start = document.querySelector(".start");
       for(let i=0; i<column.length; i++){
-        Object.assign(columns.appendChild(column[i]), {classList:"column-radio"}).append(Object.assign(column[i].appendChild(input[i]), {name: "reponse", type: "radio", id:""+i+"", value: Base[j].reponses[i]}),Object.assign(column[i].appendChild(label[i]), {for:""+i+"", textContent: Base[j].reponses[i]}));
+        Object.assign(columns.appendChild(column[i]), {classList:"column-radio"}).append(Object.assign(column[i].appendChild(inputs[i]), {name: "reponse", type: "radio", id:""+i+"", value: Base[j].reponses[i]}),Object.assign(column[i].appendChild(label[i]), {for:""+i+"", textContent: Base[j].reponses[i]}));
       }
       const progressText = Object.assign(document.createElement("div"), {className: "progressText", textContent: "Question "+ (j+1)+"/"+Base.length});
       progressCont.append(progressText, progressTimer, progress);
@@ -53,10 +52,18 @@ const start = document.querySelector(".start");
 
 let nextQuestion = ()=>{
   for(let i=0; i<column.length; i++){
-      input[i].value =  Base[j].reponses[i];
+      inputs[i].value =  Base[j].reponses[i];
       label[i].textContent =  Base[j].reponses[i];
       progressText.textContent = "Question "+ (j+1)+"/"+Base.length;
       sujet.textContent =  Base[j].titre;
+  }
+}
+for(const input of inputs){
+  input.addEventListener('change', disabledNextButton);
+}        
+function disabledNextButton(e) {
+  if (this.checked) {
+    next.disabled = false
   }
 }
 const move = () => {
