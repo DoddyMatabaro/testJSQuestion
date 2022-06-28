@@ -24,14 +24,14 @@ const Base = [ //questions base
       const fin =Object.assign(document.createElement("div"), {className: "page"});
       const title =Object.assign(document.createElement("div"), {className: "title"});
       const imageConfirmation =Object.assign(document.createElement("div"), {className: "success"});
-      imageConfirmation.appendChild(Object.assign(document.createElement("div"), {classList: "check fas fa-check"}));
+      imageConfirmation.appendChild(Object.assign(document.createElement("div"), {classList: classesImageResult(calcScore)}));
       const score =Object.assign(document.createElement("p"), {textContent: "14/"+Base.length});
       const nomJoueur =   Object.assign(document.createElement('h3'), {textContent: "Doddy Matabaro"});
       const adresseMailJour =  Object.assign(document.createElement('h5'), {textContent: "doddy@gmail.com"});
       const btnAccueil =  Object.assign(document.createElement('button'), {className: "home_btn"});
       title.append(nomJoueur, adresseMailJour);
       fin.append(title, imageConfirmation, score, btnAccueil);
-      console.log(fin);
+      fin.style.display = "none";
 const question =Object.assign(document.createElement("div"), {className: "question"});
 const columns = Object.assign(document.createElement("div"), {className: "columns"});
 const column = [document.createElement('div'),document.createElement('div'), document.createElement('div'),document.createElement('div')];
@@ -60,15 +60,19 @@ const start = document.querySelector(".start");
     columns.appendChild(btns);
     question.append(head, columns);
     question.style.display = "none";
-    form.appendChild(question);
+    form.append(question, fin);
+    reponses = ['2', '0', '3', '0', '1'];
 let calcScore = ()=>{
   let score = 0;
   for(let i=0; i<reponses.length;i++){
-      if(reponses[i] === Base[i].reponse){
+      if(reponses[i] == Base[i].reponse){
           score++ 
       }
   }
   return score;
+}
+let classesImageResult = (result)=>{
+  return (result < 8 ? "far fa-check-circle" : "far fa-times-circle");
 }
 console.log(calcScore());
 let nextQuestion = ()=>{
