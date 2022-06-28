@@ -8,18 +8,30 @@ const Base = [ //questions base
     new Libelle("La syntaxe correcte pour créer un objet vide en Js est :",0, ["let monObjet = {}", "let monObjet = []", "let monObjet = ()", "let monObjet = null"]),
     new Libelle("Ces mots permettent d'initialiser une variable, sauf :",2, ["var", "const", "function", "let"]),
     new Libelle("La bonne syntaxe pour écrire un commentaire sur ligne est :",0, ["// comment", "+ comment", "/* comment */", "# comment"]),
-    new Libelle("En le passant à la fonction isNaN, nous obtenons true :",2, ["300", "-2", "'3'", "0"]),
-    new Libelle("Vanilla JavaScript est :",3, ["Un framework javascript","Une librairie javascript", "Une marque de crême", "Du pur javascript"]),
-    new Libelle("Pour écrire sur la console Javacript on utilise :",0, ["console.log()", "console.write()", "console.print()", "alert()"]),
-    new Libelle("En JavaScript, les expressions regulières sont encadrées par :",2, ["'", "#", "/", "."]),
-    new Libelle("La balise qui permet d'inserer du code javascript est :",2, ["js", "script", "javascript", "link"]),
-    new Libelle("Pour executer JavaScript sur un serveur nous avons besion de :",2, ["ReactNative", "ReactJS", "NodeJs", "Composer"]),
-    new Libelle("Une variable non declarée aura pour valeur :",3, ["null", 0, "Object", "undefined"]),
-    new Libelle("Pour faire réference à un script js extene en html :",1, ["<script href='mon_script.js'>", "<script src='mon_script.js'>", "<link src='mon_script.js'>", "<rel link='mon_script.js'>"]),
-    new Libelle("Pour executer alert() chaque 5s, on écrira :",1, ["setInterval(alert, 5000)", "setTimeout(alert, 5)", "setInterval(alert, 5)", "forTime(alert, 5000)"]),
-    new Libelle("Le nom correct d'une variable est :",1, ["ma_variable", "ma variable", "ma-variable", "mavariable()"]),
+    // new Libelle("En le passant à la fonction isNaN, nous obtenons true :",2, ["300", "-2", "'3'", "0"]),
+    // new Libelle("Vanilla JavaScript est :",3, ["Un framework javascript","Une librairie javascript", "Une marque de crême", "Du pur javascript"]),
+    // new Libelle("Pour écrire sur la console Javacript on utilise :",0, ["console.log()", "console.write()", "console.print()", "alert()"]),
+    // new Libelle("En JavaScript, les expressions regulières sont encadrées par :",2, ["'", "#", "/", "."]),
+    // new Libelle("La balise qui permet d'inserer du code javascript est :",2, ["js", "script", "javascript", "link"]),
+    // new Libelle("Pour executer JavaScript sur un serveur nous avons besion de :",2, ["ReactNative", "ReactJS", "NodeJs", "Composer"]),
+    // new Libelle("Une variable non declarée aura pour valeur :",3, ["null", 0, "Object", "undefined"]),
+    // new Libelle("Pour faire réference à un script js extene en html :",1, ["<script href='mon_script.js'>", "<script src='mon_script.js'>", "<link src='mon_script.js'>", "<rel link='mon_script.js'>"]),
+    // new Libelle("Pour executer alert() chaque 5s, on écrira :",1, ["setInterval(alert, 5000)", "setTimeout(alert, 5)", "setInterval(alert, 5)", "forTime(alert, 5000)"]),
+    // new Libelle("Le nom correct d'une variable est :",1, ["ma_variable", "ma variable", "ma-variable", "mavariable()"]),
     new Libelle("L'object JavaScript qui gére le DOM est  :",3, ["HTMLElement", "DOM", "Node", "document"])
   ];
+   // fin page
+      const fin =Object.assign(document.createElement("div"), {className: "page"});
+      const title =Object.assign(document.createElement("div"), {className: "title"});
+      const imageConfirmation =Object.assign(document.createElement("div"), {className: "success"});
+      imageConfirmation.appendChild(Object.assign(document.createElement("div"), {classList: "check fas fa-check"}));
+      const score =Object.assign(document.createElement("p"), {textContent: "14/"+Base.length});
+      const nomJoueur =   Object.assign(document.createElement('h3'), {textContent: "Doddy Matabaro"});
+      const adresseMailJour =  Object.assign(document.createElement('h5'), {textContent: "doddy@gmail.com"});
+      const btnAccueil =  Object.assign(document.createElement('button'), {className: "home_btn"});
+      title.append(nomJoueur, adresseMailJour);
+      fin.append(title, imageConfirmation, score, btnAccueil);
+      console.log(fin);
 const question =Object.assign(document.createElement("div"), {className: "question"});
 const columns = Object.assign(document.createElement("div"), {className: "columns"});
 const column = [document.createElement('div'),document.createElement('div'), document.createElement('div'),document.createElement('div')];
@@ -49,7 +61,16 @@ const start = document.querySelector(".start");
     question.append(head, columns);
     question.style.display = "none";
     form.appendChild(question);
-
+let calcScore = ()=>{
+  let score = 0;
+  for(let i=0; i<reponses.length;i++){
+      if(reponses[i] === Base[i].reponse){
+          score++ 
+      }
+  }
+  return score;
+}
+console.log(calcScore());
 let nextQuestion = ()=>{
   for(let i=0; i<column.length; i++){
       inputs[i].value =  i;
@@ -83,7 +104,6 @@ const move = () => {
 		 progress.value--;     
 		 setTimeout(move, 1000);
 	} else {
-		// checkResponse()
 		j++
     nextQuestion()
     progress.value = 60;
@@ -99,6 +119,7 @@ next.addEventListener("click", (e)=>{ // next question event
     j++;
     nextQuestion();
     progress.value = 60;
+    next.disabled = true;
   }
 })
 let validateEmail =  (emailAdress)=>{ //email validation
