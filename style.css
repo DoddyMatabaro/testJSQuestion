@@ -194,3 +194,23 @@ button[disabled]{
   background-color: #cccccc;
   color: #666666;
 }
+
+.title{
+    text-align: center;
+    margin: 70px ;
+}
+.title>h3{
+    padding-bottom: 30px;
+    font-size: 25px;
+}
+.title>p{
+    /* padding-bottom: 30px; */
+    font-size: 25px;
+}
+.success{
+    justify-content: center;
+}
+
+.page{
+    text-align: center;
+}

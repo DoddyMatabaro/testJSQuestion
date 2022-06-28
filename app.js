@@ -24,14 +24,15 @@ const Base = [ //questions base
       const fin =Object.assign(document.createElement("div"), {className: "page"});
       const title =Object.assign(document.createElement("div"), {className: "title"});
       const imageConfirmation =Object.assign(document.createElement("div"), {className: "success"});
-      imageConfirmation.appendChild(Object.assign(document.createElement("div"), {classList: classesImageResult(calcScore)}));
+      // imageConfirmation.appendChild(Object.assign(document.createElement("div"), {classList: classesImageResult(calcScore())}));
       const score =Object.assign(document.createElement("p"), {textContent: "14/"+Base.length});
       const nomJoueur =   Object.assign(document.createElement('h3'), {textContent: "Doddy Matabaro"});
       const adresseMailJour =  Object.assign(document.createElement('h5'), {textContent: "doddy@gmail.com"});
-      const btnAccueil =  Object.assign(document.createElement('button'), {className: "home_btn"});
+      const btnAccueil =  Object.assign(document.createElement('button'), {className: "home_btn", textContent: "Accueil"});
       title.append(nomJoueur, adresseMailJour);
       fin.append(title, imageConfirmation, score, btnAccueil);
-      fin.style.display = "none";
+      console.log(fin.childNodes);
+      document.querySelector('.accueil').style.display = "none";
 const question =Object.assign(document.createElement("div"), {className: "question"});
 const columns = Object.assign(document.createElement("div"), {className: "columns"});
 const column = [document.createElement('div'),document.createElement('div'), document.createElement('div'),document.createElement('div')];
@@ -61,7 +62,7 @@ const start = document.querySelector(".start");
     question.append(head, columns);
     question.style.display = "none";
     form.append(question, fin);
-    reponses = ['2', '0', '3', '0', '1'];
+    // reponses = ['2', '0', '3', '0', '1'];
 let calcScore = ()=>{
   let score = 0;
   for(let i=0; i<reponses.length;i++){
@@ -74,13 +75,13 @@ let calcScore = ()=>{
 let classesImageResult = (result)=>{
   return (result < 8 ? "far fa-check-circle" : "far fa-times-circle");
 }
-console.log(calcScore());
+console.log(classesImageResult());
 let nextQuestion = ()=>{
   for(let i=0; i<column.length; i++){
       inputs[i].value =  i;
-      label[i].textContent =  Base[j].reponses[i];
+      // label[i].textContent =  Base[j].reponses[i];
       progressText.textContent = "Question "+ (j+1)+"/"+Base.length;
-      sujet.textContent =  Base[j].titre;
+      // sujet.textContent =  Base[j].titre;
   }
 }
 let checkSelectedAssertion = ()=>{
@@ -122,8 +123,16 @@ next.addEventListener("click", (e)=>{ // next question event
     console.log(reponses);
     j++;
     nextQuestion();
+    if(j == Base.length-2){
+        next.textContent = "Terminer"
+    }
     progress.value = 60;
     next.disabled = true;
+  }else{
+    question.style.display = "none";
+    fin.style.display = "block";
+    imageConfirmation.appendChild(Object.assign(document.createElement("div"), {classList: classesImageResult(calcScore())}));
+    console.log(fin);
   }
 })
 let validateEmail =  (emailAdress)=>{ //email validation
