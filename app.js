@@ -6,9 +6,9 @@ function Libelle(titre, reponse, reponses){ //class that structed questions
 const Base = [ //questions base
     new Libelle("Quel est le type d'un fichier javascript ?",2,[".j",".jsx", ".js",".ts"]),
     new Libelle("La syntaxe correcte pour créer un objet vide en Js est :",0, ["let monObjet = {}", "let monObjet = []", "let monObjet = ()", "let monObjet = null"]),
-    new Libelle("Ces mots permettent d'initialiser une variable, sauf :",2, ["var", "const", "function", "let"]),
-    new Libelle("La bonne syntaxe pour écrire un commentaire sur ligne est :",0, ["// comment", "+ comment", "/* comment */", "# comment"]),
-    // new Libelle("En le passant à la fonction isNaN, nous obtenons true :",2, ["300", "-2", "'3'", "0"]),
+    // new Libelle("Ces mots permettent d'initialiser une variable, sauf :",2, ["var", "const", "function", "let"]),
+    // new Libelle("La bonne syntaxe pour écrire un commentaire sur ligne est :",0, ["// comment", "+ comment", "/* comment */", "# comment"]),
+    // // new Libelle("En le passant à la fonction isNaN, nous obtenons true :",2, ["300", "-2", "'3'", "0"]),
     // new Libelle("Vanilla JavaScript est :",3, ["Un framework javascript","Une librairie javascript", "Une marque de crême", "Du pur javascript"]),
     // new Libelle("Pour écrire sur la console Javacript on utilise :",0, ["console.log()", "console.write()", "console.print()", "alert()"]),
     // new Libelle("En JavaScript, les expressions regulières sont encadrées par :",2, ["'", "#", "/", "."]),
@@ -24,15 +24,12 @@ const Base = [ //questions base
       const fin =Object.assign(document.createElement("div"), {className: "page"});
       const title =Object.assign(document.createElement("div"), {className: "title"});
       const imageConfirmation =Object.assign(document.createElement("div"), {className: "success"});
-      // imageConfirmation.appendChild(Object.assign(document.createElement("div"), {classList: classesImageResult(calcScore())}));
-      const score =Object.assign(document.createElement("p"), {textContent: "14/"+Base.length});
-      const nomJoueur =   Object.assign(document.createElement('h3'), {textContent: "Doddy Matabaro"});
-      const adresseMailJour =  Object.assign(document.createElement('h5'), {textContent: "doddy@gmail.com"});
-      const btnAccueil =  Object.assign(document.createElement('button'), {className: "home_btn", textContent: "Accueil"});
-      title.append(nomJoueur, adresseMailJour);
-      fin.append(title, imageConfirmation, score, btnAccueil);
-      console.log(fin.childNodes);
-      document.querySelector('.accueil').style.display = "none";
+      // imageConfirmation.appendChild(Object.assign(document.createElement("div"), {classList: "far fa-times-circle"}));
+      const score=document.createElement("p");
+     const btnAccueil =  Object.assign(document.createElement('button'), {className: "home_btn", textContent: "Accueil"});
+      
+      fin.append(title, imageConfirmation, score, btnAccueil)
+      fin.style.display = "none";
 const question =Object.assign(document.createElement("div"), {className: "question"});
 const columns = Object.assign(document.createElement("div"), {className: "columns"});
 const column = [document.createElement('div'),document.createElement('div'), document.createElement('div'),document.createElement('div')];
@@ -62,8 +59,8 @@ const start = document.querySelector(".start");
     question.append(head, columns);
     question.style.display = "none";
     form.append(question, fin);
-    // reponses = ['2', '0', '3', '0', '1'];
-let calcScore = ()=>{
+    // reponses = [1,0,2]
+let calcScore = ()=>{ //comparing  selected assertions and the corrects assertions in the Base questions and return un score 
   let score = 0;
   for(let i=0; i<reponses.length;i++){
       if(reponses[i] == Base[i].reponse){
@@ -72,19 +69,22 @@ let calcScore = ()=>{
   }
   return score;
 }
-let classesImageResult = (result)=>{
-  return (result < 8 ? "far fa-check-circle" : "far fa-times-circle");
+let classesImageResult = (result)=>{ //check witch icon font awesone take(cllasses)
+  return (result > Base.length / 2 ? "far fa-check-circle" : "far fa-times-circle");
 }
-console.log(classesImageResult());
-let nextQuestion = ()=>{
+quit.addEventListener("click", e=>{
+  e.preventDefault();
+  showResultPage();
+})
+let nextQuestion = ()=>{ //next question
   for(let i=0; i<column.length; i++){
       inputs[i].value =  i;
-      // label[i].textContent =  Base[j].reponses[i];
+      label[i].textContent =  Base[j].reponses[i];
       progressText.textContent = "Question "+ (j+1)+"/"+Base.length;
-      // sujet.textContent =  Base[j].titre;
+      sujet.textContent =  Base[j].titre;
   }
 }
-let checkSelectedAssertion = ()=>{
+let checkSelectedAssertion = ()=>{ //check if one of assertion are selected
     inputs.forEach((input)=>{
         if(input.checked){
             reponsesList(input.value);
@@ -92,58 +92,67 @@ let checkSelectedAssertion = ()=>{
         }
     })
 }
-for(const input of inputs){//
+for(const input of inputs){//enable next button
   input.addEventListener('change', enabledNextButton);
 }        
-function enabledNextButton(e) {
+function enabledNextButton(e) {// enable next button is one off radio buttons has checked
   if (this.checked) {
     next.disabled = false
   }
 }
-let reponsesList = (reponse)=>{
+let reponsesList = (reponse)=>{//take and save selected assertion
     return reponses.push(reponse);
 }
-const move = () => {
+const move = () => { // move progress bar and timer
 	if (progress.value > 0) {
      progressTimer.textContent = progress.value;
 		 progress.value--;     
 		 setTimeout(move, 1000);
 	} else {
 		j++
-    nextQuestion()
-    progress.value = 60;
-    move()
+   testIteration()
 	}
 };
 next.addEventListener("click", (e)=>{ // next question event
   e.preventDefault();
-  
-  if(j < Base.length){
+  if(j < Base.length){ // j is the compter of interations 
     checkSelectedAssertion();
     console.log(reponses);
     j++;
-    nextQuestion();
-    if(j == Base.length-2){
-        next.textContent = "Terminer"
-    }
-    progress.value = 60;
-    next.disabled = true;
-  }else{
-    question.style.display = "none";
-    fin.style.display = "block";
-    imageConfirmation.appendChild(Object.assign(document.createElement("div"), {classList: classesImageResult(calcScore())}));
-    console.log(fin);
+    testIteration(); 
   }
 })
+let testIteration= ()=>{ //a iteration have many situation her we prepare any situation
+    if(j == Base.length-1){ //to change content text of next button
+      next.textContent = "Terminer"
+      nextQuestion();
+      progress.value = 60;
+      next.disabled = true;
+    }else if(j == Base.length){ // we print the end page to game result
+      showResultPage();
+    }else{
+      nextQuestion();
+      progress.value = 60;
+      next.disabled = true;
+    }
+}
 let validateEmail =  (emailAdress)=>{ //email validation
       let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
       return regexEmail.test(emailAdress) ;
  }
 let test = (elt, info)=>{ // form validation
-     return (elt[0].value == "" ? info[0].textContent = "Veillez renseigner votre nom" : elt[0].value.length <= 2 ? info[0].textContent ="Entrer un nom valide": elt[1].value == "" ? info[1].textContent = "Veuillez renseigner votre mail" : !validateEmail(elt[1].value) ? info[1].textContent = "Entrer une adresse mail valide" :
+     return (elt[0].value == "" ? (info[0].textContent = "Veillez renseigner votre nom", elt[0].style.border="1px solid red") : elt[0].value.length <= 2 ? (info[0].textContent ="Entrer un nom valide",elt[0].style.border="1px solid red"): elt[1].value == "" ? (info[1].textContent = "Veuillez renseigner votre mail" ,elt[1].style.border="1px solid red"): !validateEmail(elt[1].value) ? (elt[1].style.border="1px solid red", info[1].textContent = "Entrer une adresse mail valide") :
       (document.querySelector(".accueil").style.display = "none", question.style.display = "block", move(), next.disabled = true));
 }
 start.addEventListener("click",(e)=>{ //start button event 
         e.preventDefault();
         test([nom,mail], [span1,span2])
 })
+let showResultPage = ()=>{
+  question.style.display = "none";
+  fin.style.display = "block";
+  score.textContent = calcScore() +"/"+Base.length;
+  title.appendChild(Object.assign(document.createElement('h3'), {textContent: nom.value}));
+  title.appendChild(Object.assign(document.createElement('h5'), {textContent: mail.value}));
+  imageConfirmation.appendChild(Object.assign(document.createElement("div"), {classList: classesImageResult(calcScore())})); //take font awesome icons to show contextual image result
+};
